@@ -1,0 +1,9 @@
+config.php
+
+# Dossier d'upload
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Fichiers système
+.DS_Store
+Thumbs.db

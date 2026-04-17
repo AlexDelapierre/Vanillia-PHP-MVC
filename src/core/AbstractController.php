@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Core;
+
+abstract class AbstractController
+{
+
+    /**
+     * Affiche une vue intégrée dans le layout principal
+     * @param string $view Nom du fichier vue (ex: 'book/list')
+     * @param array $data Données à transmettre à la vue
+     */
+    protected function render(string $template, array $data = []): void
+    {
+        extract($data);
+
+        ob_start();
+
+        $templatePath = __DIR__ . '/../../templates/' . $template . '.php';
+        if (file_exists($templatePath)) {
+            require $templatePath;
+        } else {
+            die("Erreur : Le template '{$template}' est introuvable.");
+        }
+
+        $content = ob_get_clean();
+
+        require __DIR__ . '/../../templates/layout.php';
+    }
+
+    /**
+     * Redirige vers une autre page
+     */
+    protected function redirect(string $url): void
+    {
+        header("Location: " . $url);
+        exit();
+    }
+
+    /**
+     * Connecte un utilisateur en enregistrant ses infos en session
+     */
+    protected function setUserSession($user): void
+    {
+        $_SESSION['user'] = [
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'avatar' => $user->getAvatar()
+        ];
+    }
+
+    /**
+     * Vérifie si l'utilisateur est connecté
+     */
+    protected function isConnected(): bool
+    {
+        return isset($_SESSION['user']);
+    }
+
+    /**
+     * Détruit la session
+     */
+    protected function destroySession(): void
+    {
+        $_SESSION = [];
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+        session_destroy();
+    }
+}
