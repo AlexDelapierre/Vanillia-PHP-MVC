@@ -1,23 +1,29 @@
 <?php
+
+use App\Core\Router;
+use App\Controller\HomeController;
+use App\Controller\UserController;
+use App\Controller\BookController;
+
 session_start();
 
+require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../src/Autoloader.php';
 
 \App\Autoloader::register();
 
-use App\Core\Router;
-use App\Controller\UserController;
-use App\Controller\HomeController;
-
 $router = new Router();
+
+// Route par défaut (Accueil)
+$router->addRoute('/', HomeController::class, 'index');
 
 // Routes pour l'utilisateur
 $router->addRoute('/register', UserController::class, 'register');
 $router->addRoute('/login', UserController::class, 'login');
 $router->addRoute('/logout', UserController::class, 'logout');
 
-// Route par défaut (Accueil)
-$router->addRoute('/', HomeController::class, 'index');
+// Route pour la liste des livres
+$router->addRoute('/books', BookController::class, 'list');
 
 // Lancement du Router avec l'URL actuelle
 try {

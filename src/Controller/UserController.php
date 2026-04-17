@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Core\AbstractController;
-use App\Repository\UserRepository;
+use App\Model\Repository\UserRepository;
 use App\Model\Entity\User;
 
 class UserController extends AbstractController
