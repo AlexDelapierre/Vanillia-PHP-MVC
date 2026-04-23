@@ -2,9 +2,11 @@
 
 namespace App\Model\Entity;
 
-class Book
+use App\Core\AbstractEntity;
+
+class Book extends AbstractEntity
 {
-    private ?int $id;
+    // private ?int $id;
     private int $userId;
     private string $title;
     private string $author;
@@ -12,21 +14,21 @@ class Book
     private ?string $image;
     private bool $isAvailable;
 
-    public function __construct(?int $id = null, int $userId = 0, string $title = "", string $author = "", string $description = "", ?string $image = null, bool $isAvailable = true)
-    {
-        $this->id = $id;
-        $this->userId = $userId;
-        $this->title = $title;
-        $this->author = $author;
-        $this->description = $description;
-        $this->image = $image;
-        $this->isAvailable = $isAvailable;
-    }
+    // public function __construct(?int $id = null, int $userId = 0, string $title = "", string $author = "", string $description = "", ?string $image = null, bool $isAvailable = true)
+    // {
+    //     $this->id = $id;
+    //     $this->userId = $userId;
+    //     $this->title = $title;
+    //     $this->author = $author;
+    //     $this->description = $description;
+    //     $this->image = $image;
+    //     $this->isAvailable = $isAvailable;
+    // }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    // public function getId(): ?int
+    // {
+    //     return $this->id;
+    // }
 
     public function getUserId(): int
     {
